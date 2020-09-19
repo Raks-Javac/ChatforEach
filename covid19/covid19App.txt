@@ -1,0 +1,112 @@
+Covid-19 flutter App made with Scoped_model
+
+#A picture of my Project Stays here
+
+
+In this article ,i am going to explain how i made a covid-19 app to manage the state of my app in a smooth an simple way.
+Scoped_model itself provides you with all you need to pass down logic down to your view in a clean way.
+As you know getting started creating any app in flutter comes with excitement so lets get started .
+
+#A picture of scoped Model Stays here
+
+
+The structure of the covid-19 app is what i structured to be like 
+Data -> Model -> View(User Interface)
+
+The Data takes on all the data you want to render in you app in a custom class and passing in custom properties.
+
+The Model takes on the data from the 'Data' section and renders it to the view in a more logical way.In the Model Section is where we call "the Business Logic Section"
+
+The View is what we call the User Interface(What is being show to the user),
+
+Note: scoped_model doesnt need to be rendered in a Stateful widget in the view Section for the state to be changed,
+
+Advantages: Less BoilerPlate
+
+A Simple Example :
+
+(Data Section)
+#Codes
+
+class Data{
+    int counter;
+
+}
+
+(Model Section)
+#in this Section we make use of the counter variable
+class DataModel extends Model{
+    Data data_provider = Data();
+
+int get counter => data_provider.counter;
+
+#The incrementer method returns the incremnting  counter from the Data Class and changes state of the counter with the "notifyListeners()" inbuilt method from the scoped_model in the view 
+   incrementer(){
+   counter += 1;
+      notifyListeners();
+  }
+
+
+}
+
+
+(View Section)
+
+#First is invoking your Model class with the ScopedModel instance wrapping it with the rendered uI
+
+
+class Counter extends StatelessWidget{
+  @override
+  Widget build(BuildContext context) {
+   
+    return ScopedModel<DataModel>(
+      model: DataModel(),
+      child: SafeArea(
+        child: Scaffold(
+          backgroundColor: Colors.white,
+          body: Container(
+            child: ScopedModelDescendant<DataModel>(
+              builder: (context, child, model) => Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignemnt : MainAxisAlignemnt.center,
+                children: [
+Text("${model.counter}"),
+RaisedButton(
+    onPressed: ()=> model.incrementer();
+    child: Text("Add"),
+)          
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+
+
+
+
+Looking at the way Scoped_model provides you with power to easily seperate you data from you business logic to you view is amazing and cool right?
+
+
+#A Sarcastic gif stays here
+
+
+Let's a deep dive into scoped_model as we look into the covid-19 projects
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% comment %} The link to this repository for more understanding and use in your projects {% endcomment %}
